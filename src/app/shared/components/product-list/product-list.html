@@ -1,0 +1,38 @@
+<section class="product-table-wrapper">
+    <table class="product-table" role="grid" aria-describedby="Produktliste">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Beschreibung</th>
+                <th>Bestand</th>
+                <th>Preis(€)</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(items of list ; track items.name; let index = $index){
+            <tr [routerLink]="['detail', items.name]" role="link">
+                <td>#{{index +1}} {{items.name}}</td>
+                <td>{{items.description}}</td>
+                <td><span class="badge ok">{{items.stock}}</span></td>
+                <td class="price">
+                    @switch(true){
+                    @case(items.price > 1000000){
+                    {{items.price/1000000}}mio
+                    }
+                    @case(items.price > 1000){
+                    {{items.price/1000}}k
+                    }
+                    @default(){
+                    {{items.price}}
+                    }
+                    }
+                </td>
+                <td><a class="btn--view" aria-label="{{items.price}}"></a></td>
+            </tr>
+            }@empty {
+            <p>Keine Items vorhanden</p>
+            }
+        </tbody>
+    </table>
+</section>
